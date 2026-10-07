@@ -1,161 +1,66 @@
-🎓 Engage-Moi — Student Engagement Detection via Emotion Recognition
+# 🎓 Engage-Moi — Student Engagement Detection via Emotion Recognition
 
-Système intelligent de détection de l'engagement des étudiants basé sur la reconnaissance des émotions et des Action Units (AUs).
+> Système intelligent de détection de l'engagement des étudiants basé sur la reconnaissance des émotions et des Action Units (AUs).
+
 <img width="1891" height="897" alt="image" src="https://github.com/user-attachments/assets/44a37f93-ccb8-478b-986d-edb7c82339c1" />
-📌 Présentation
 
-Engage-Moi est une application web basée sur l'Intelligence Artificielle permettant d'analyser les expressions faciales d'un étudiant afin d'identifier ses Action Units (AUs), d'estimer son état émotionnel, puis de déduire un niveau d'engagement.
+## 📌 Présentation
 
-Le système combine :
+**Engage-Moi** est une application web basée sur l'Intelligence Artificielle permettant d'analyser les expressions faciales d'un étudiant afin de détecter ses **Action Units (AUs)**, d'estimer son **émotion**, puis de déduire son niveau d'**engagement**.
 
-Deep Learning avec ResNet50 ;
+Le système combine **Deep Learning**, **Computer Vision** et **reconnaissance des émotions** à travers un modèle **ResNet50** et OpenCV.
 
-Computer Vision avec OpenCV ;
+L'application permet également une analyse à partir de la **webcam en temps réel**.
 
-Facial Detection avec Haar Cascade ;
+## 🎯 Objectifs
 
-Action Unit Recognition ;
+- Détecter automatiquement le visage dans une image ou une vidéo.
+- Prédire les Action Units et leurs intensités.
+- Estimer l'émotion à partir des AUs détectées.
+- Déduire un état d'engagement.
+- Afficher les résultats dans une interface web.
+- Permettre l'analyse en temps réel via webcam.
 
-une couche d'interprétation des émotions ;
+## 🌐 Fonctionnalités du site
 
-une classification de l'engagement ;
-
-une interface web développée avec Flask.
-
-L'application permet également une analyse à partir de la webcam en temps réel.
-
-
-Le projet vise à développer une solution capable de :
-
-détecter automatiquement un visage dans une image ;
-
-extraire la région faciale ;
-
-prédire plusieurs Action Units ;
-
-interpréter les AUs afin d'estimer une émotion ;
-
-déduire un état d'engagement ;
-
-afficher les résultats dans une interface web intuitive ;
-
-analyser les expressions faciales à partir d'une webcam.
-
-😊 Détection des émotions
-
-Les Action Units prédites sont utilisées pour calculer des scores correspondant à différentes émotions.
-
-Les émotions considérées sont :
-
-Joy
-
-Sad
-
-Surprise
-
-Fear
-
-Anger
-
-Disgust
-
-Contempt
-
-Neutre
-
-Chaque émotion est associée à un ensemble d'Action Units pondérées.
-
-🎓 Détection de l'engagement
-
-Une règle d'interprétation permet ensuite d'associer l'émotion détectée à un état d'engagement.
-
-Émotion
-
-Engagement
-
-Joy
-
-Engagé
-
-Surprise
-
-Engagé
-
-Neutre
-
-Engagé
-
-Sad
-
-Non engagé
-
-Fear
-
-Non engagé
-
-Anger
-
-Non engagé
-
-Disgust
-
-Non engagé
-
-Contempt
-
-Non engagé
-
-Cette étape constitue une règle d'interprétation basée sur les émotions et non un modèle de classification de l'engagement entraîné directement sur des données d'engagement.
-
-📸 Analyse d'une image
+### 📸 Analyse d'une image
 
 L'utilisateur peut importer une image contenant un visage.
 
 Le système :
 
-charge l'image ;
-
-détecte le visage ;
-
-encadre le visage détecté en rouge ;
-
-conserve l'image complète pour l'affichage ;
-
-extrait le visage pour l'analyse ;
-
-applique le modèle ResNet50 ;
-
-prédit les Action Units ;
-
-calcule les scores émotionnels ;
-
-affiche l'émotion et l'engagement.
-
-L'interface affiche notamment :
-
-l'image complète analysée ;
-
-le visage détecté ;
-
-les Action Units ;
-
-leur intensité ;
-
-les scores des émotions ;
-
-l'émotion finale ;
-
-l'état d'engagement.
+1. détecte le visage ;
+2. l'encadre en **rouge** sur l'image complète ;
+3. extrait la région faciale pour l'analyse ;
+4. applique le modèle **ResNet50** ;
+5. prédit les Action Units ;
+6. calcule les scores émotionnels ;
+7. affiche l'émotion et l'engagement estimés.
 
 <img width="1891" height="911" alt="image" src="https://github.com/user-attachments/assets/82196e5d-ea58-43b9-9bdd-c14480bbdf40" />
+
 <img width="1796" height="907" alt="image" src="https://github.com/user-attachments/assets/7e3b63b7-a885-408c-9700-4b246cc23d4c" />
 
-📁 Structure du projet
+### 🎥 Analyse par webcam
 
+L'application permet également d'utiliser la webcam pour analyser les expressions faciales **en temps réel** et afficher l'émotion ainsi que l'état d'engagement détectés.
+
+## 🛠️ Technologies utilisées
+
+| Catégorie | Technologies |
+|---|---|
+| **IA / Deep Learning** | Python, PyTorch, Torchvision, ResNet50 |
+| **Computer Vision** | OpenCV, Haar Cascade |
+| **Backend** | Flask |
+| **Frontend** | HTML5, CSS3, JavaScript |
+| **Outils** | Git, GitHub, Virtual Environment (venv) |
+
+## 📁 Structure du projet
+
+```text
 Engage-moi/
 │
 ├── app2.py
-│
 ├── models/
 │   └── resnet50.pth
 │
@@ -177,99 +82,59 @@ Engage-moi/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+```
 
-La structure exacte peut évoluer selon les fichiers présents dans le projet.
+## ⚙️ Installation
 
-🛠️ Technologies utilisées
+### 1. Cloner le projet
 
-Intelligence Artificielle
-
-Python
-
-PyTorch
-
-Torchvision
-
-ResNet50
-
-Deep Learning
-
-Action Unit Recognition
-
-Computer Vision
-
-OpenCV
-
-Haar Cascade
-
-Image preprocessing
-
-Facial detection
-
-Webcam processing
-
-Backend
-
-Flask
-
-Python
-
-Frontend
-
-HTML5
-
-CSS3
-
-JavaScript
-
-Outils
-
-Git
-
-GitHub
-
-Virtual Environment (venv)
-
-⚙️ Installation
-
-1. Cloner le projet
-
-git clone https://github.com/<USERNAME>/<REPOSITORY>.git
+```bash
 cd Engage-moi
+```
 
-Remplacez <USERNAME> et <REPOSITORY> par les informations de votre dépôt GitHub.
+### 2. Créer l'environnement virtuel
 
-2. Créer un environnement virtuel
+Python **3.11** est recommandé.
 
-Avec Python 3.11 :
-
+```bash
 py -3.11 -m venv venv
+```
 
-3. Activer l'environnement virtuel
+### 3. Activer l'environnement virtuel
 
-Sous Windows PowerShell :
+**Windows PowerShell :**
 
+```powershell
 .\venv\Scripts\Activate.ps1
+```
 
-Sous Windows CMD :
+**Windows CMD :**
 
+```cmd
 venv\Scripts\activate
+```
 
-4. Installer les dépendances
+### 4. Installer les dépendances
 
+```bash
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+```
 
-▶️ Lancer l'application
+## ▶️ Lancer l'application
 
-Une fois l'environnement activé :
+Une fois l'environnement virtuel activé :
 
+```bash
 python app2.py
+```
 
-Flask démarre ensuite le serveur local.
+Puis ouvrir :
 
-Ouvrir dans le navigateur :
-
+```text
 http://127.0.0.1:5000
+```
 
+## 👩‍💻 Projet académique
 
+**Engage-Moi** est réalisé dans le cadre d'un projet académique en **Intelligence Artificielle**, avec un focus sur le **Deep Learning**, la **Computer Vision**, la **reconnaissance des émotions** et la **détection de l'engagement étudiant**.
