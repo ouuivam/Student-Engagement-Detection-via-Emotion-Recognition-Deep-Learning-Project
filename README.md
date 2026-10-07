@@ -138,3 +138,6 @@ http://127.0.0.1:5000
 ## 👩‍💻 Projet académique
 
 **Engage-Moi** est réalisé dans le cadre d'un projet académique en **Intelligence Artificielle**, avec un focus sur le **Deep Learning**, la **Computer Vision**, la **reconnaissance des émotions** et la **détection de l'engagement étudiant**.
+
+
+<3
