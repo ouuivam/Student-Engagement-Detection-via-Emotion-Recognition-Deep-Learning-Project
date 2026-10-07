@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Engage-Moi</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="icon" href="{{ url_for('static', filename='image/logo.jpeg') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+
+<section id="header">
+    <div class="list">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <img src="{{ url_for('static', filename='image/logo.png') }}" height="40px" class="logo">
+
+   
+    <ul class="menus">
+      <li class="menu"><a href="{{ url_for('home') }}" class="lname active">Home</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">Objectifs</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">Services</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">À propos</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">Contact</a></li>
+
+    </ul>
+  <a href="{{ url_for('detecte') }}" >  <input type="button"   value="Tester maintenant" class="Bookbtn"/></a>
+</section>
+
+
+
+
+
+
+
+  <section class="test-choice-section">
+    <div class="container">
+      <h1 class="section-title">Choisissez votre méthode de test</h1>
+      <p class="section-description">Vous pouvez tester notre système de détection des émotions en important une image ou via votre webcam en temps réel.</p>
+
+      <div class="test-options">
+        <div class="test-card">
+          <i class="fa-regular fa-image test-icon"></i>
+          <h3>Tester par image</h3>
+          <p>Envoyez une photo de votre visage pour analyser vos émotions faciales instantanément.</p>
+          <a href="/teste" class="test-btn">Tester avec une image</a>
+        </div>
+
+        <div class="test-card">
+          <i class="fa-solid fa-video test-icon"></i>
+          <h3>Tester en direct</h3>
+          <p>Utilisez votre webcam pour une détection d’émotions en temps réel, sans téléchargement.</p>
+          <a href="/camera" class="test-btn">Tester avec la caméra</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+ {% include 'footer.html' %}
+
+
+
+
+
+
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+
+
+
+</body>
+</html>

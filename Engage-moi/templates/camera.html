@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Engage-Moi - Live Emotion Detection</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="icon" href="{{ url_for('static', filename='image/logo.jpeg') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+      h2 {
+        margin: 30px 0 30px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 28px;
+        width: 100%;
+      }
+      .video-container {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      .video-container img {
+        border-radius: 15px;
+        box-shadow: 0 0 15px black;
+        max-width: 100%;
+        height: auto;
+      }
+      .emotion-results {
+        width: 150%;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 40px;
+        min-height: 50px; /* réserve un espace */
+      }
+
+      /* Nouveau CSS pour layout vidéo + résultats côte à côte */
+      #container {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 80px; /* espace entre vidéo et résultats */
+        padding: 10px;
+      }
+      #video-stream {
+        border: 1px solid black;
+        border-radius: 15px;
+        box-shadow: 0 0 15px black;
+        max-width: 480px;
+        height: auto;
+        margin-top: 80px;
+        margin-bottom: 40px;
+      }
+      #results {
+        font-family: 'Poppins', Arial, sans-serif;
+        width: 500px;
+        background: black;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 40px;
+        margin-top: 4px;
+        
+      }
+
+      
+/* Émotion dominante */
+.emotion-dominante {
+  font-size: 24px;
+  font-weight: 300;
+  color: white ;/* bleu vif */
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Engagement */
+.engagement {
+  font-size: 24px;
+  font-weight: 300;
+  color: white; 
+  text-align: center;/* vert si engagé */
+}
+
+/* Tu peux faire ça dynamiquement selon la valeur, ou juste styliser neutre */
+.engagement:contains("non engagé") {
+  color: #e74c3c; /* rouge si non engagé */
+}
+
+
+/* Liste des scores */
+.score-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px;
+  color: white;
+}
+
+.score-item {
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+}
+
+.score-emotion {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.score-value {
+  font-weight: 500;
+  color: #5dade2; /* bleu clair */
+}
+
+
+      #results h2 {
+        margin: 10px;
+        font-weight: 600;
+        text-align: center;
+      }
+      #results ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin : 20px
+      }
+      #results li {
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+#results h4 {
+  color: white;
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 14px;
+
+}
+
+
+    </style>
+</head>
+<body>
+
+{% include 'header.html' %}
+
+<h2>Détection AUs en temps réel</h2>
+
+<div id="container">
+  <!-- Stream vidéo live à gauche -->
+  <img id="video-stream" src="{{ url_for('feed_video') }}" alt="Stream vidéo live" />
+
+  <!-- Zone résultats à droite -->
+  <div id="results">
+    <h2>Résultats d'émotions</h2>
+    <p>Chargement...</p>
+  </div>
+</div>
+
+<script>
+  const videoStream = document.getElementById('video-stream');
+  const resultsDiv = document.getElementById('results');
+
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  async function captureAndPredict() {
+    if (!videoStream.complete) {
+      setTimeout(captureAndPredict, 500);
+      return;
+    }
+
+    canvas.width = videoStream.width;
+    canvas.height = videoStream.height;
+
+    ctx.drawImage(videoStream, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+
+      const formData = new FormData();
+      formData.append('frame', blob, 'frame.jpg');
+
+      try {
+        const response = await fetch('/predict_camera', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error('Erreur réseau');
+
+        const data = await response.json();
+
+let html = `<p class="emotion-dominante"><strong>Émotion dominante :</strong> <span style="color:#5dade2;">${data.emotion}</span></p>`;
+
+// Gestion dynamique couleur de l'engagement
+let engagementColor = data.engagement.toLowerCase().includes("non engagé") ? "#e74c3c" : "#28b463";
+
+html += `<p class="engagement"><strong>Engagement :</strong> <span style="color:${engagementColor};">${data.engagement}</span></p>`;
+
+html += `<h4>Score des émotions</h4><ul class="score-list">`;
+for (const [emotion, score] of Object.entries(data.emotion_scores)) {
+  html += `<li class="score-item"><span class="score-emotion">${emotion}</span>: <span class="score-value">${score.toFixed(2)}</span></li>`;
+}
+html += `</ul>`;
+
+resultsDiv.innerHTML = html;
+
+
+      } catch (error) {
+        resultsDiv.textContent = 'Erreur lors de la récupération des résultats.';
+        console.error(error);
+      }
+    }, 'image/jpeg');
+  }
+
+  setInterval(captureAndPredict, 3000);
+  captureAndPredict();
+</script>
+
+{% include 'footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Engage-Moi</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="icon" href="{{ url_for('static', filename='image/logo.jpeg') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+
+<section id="header">
+    <div class="list">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <img src="{{ url_for('static', filename='image/logo.png') }}" height="40px" class="logo">
+
+   
+    <ul class="menus">
+      <li class="menu"><a href="{{ url_for('home') }}" class="lname active">Home</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">Objectifs</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">Services</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">À propos</a></li>
+<li class="menu"><a href="{{ url_for('home') }}" class="lname">Contact</a></li>
+
+    </ul>
+  <a href="{{ url_for('detecte') }}" >  <input type="button"   value="Tester maintenant" class="Bookbtn"/></a>
+</section>
+
+<section id="prehearder">
+    <h6 class="prehearderh6" data-aos="fade-up">"L’émotion au cœur de l’apprentissage : détectez, comprenez, engagez.”</h6>
+    <h5 class="prehearderh1" data-aos="fade-up" data-aos-delay="200">Découvrez comment notre système intelligent analyse vos expressions faciales pour révéler l’engagement réel de chaque étudiant, et transformer chaque cours en une expérience interactive et vivante.</h5>
+    <div class="prehearderbtn "data-aos="fade-up" data-aos-delay="200" >
+        <a href="{{ url_for('detecte') }}" type="button" class="prehearderbtn1" >Commencer l’expérience</a>
+    </div>
+</section>
+
+
+<section class="objectives-section">
+  <div class="objectives-container">
+    
+    <!-- Image à gauche (ton code réutilisé) -->
+    <div data-aos="fade-right" data-aos-delay="200"  class="Servicesright se objectives-image">
+        <div class="Services-right-image-frist">
+            <img src="{{ url_for('static', filename='image/mira.jpg') }}" class="Services-right-image" alt="Illustration du modèle">
+        </div>
+    </div>
+
+    <!-- Texte à droite -->
+    <div class="objectives-text">
+      <h2 data-aos="fade-up" data-aos-delay="200" >Pourquoi avons-nous conçu ce modèle ?</h2>
+      <p data-aos="fade-left" data-aos-delay="200" >
+        Ce projet est né d’un constat : il est difficile pour les enseignants de mesurer l’attention réelle des étudiants, notamment en contexte d’enseignement à distance ou hybride.
+      </p>
+      <p data-aos="fade-left" data-aos-delay="200" >
+        Notre objectif est donc de proposer une solution intelligente, non intrusive, capable de détecter automatiquement le niveau d’engagement en analysant les expressions faciales des apprenants.
+      </p>
+      <p data-aos="fade-left" data-aos-delay="200" >
+        En combinant landmarks faciaux, unités d’actions (AUs) et classification des émotions, notre modèle permet de mieux comprendre les réactions des étudiants, pour un apprentissage plus humain, personnalisé et efficace.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="Services">
+    
+
+    <div class="Servicesleft se">
+        <h1 class="Servicesleft-h1" data-aos="fade-up" data-aos-delay="200" >Notre technologie s’appuie sur des concepts avancés en vision par ordinateur et psychologie cognitive</h1>
+        <p class="Servicesleft-para" data-aos="fade-up" data-aos-delay="200">Ces disciplines permettent d’explorer en profondeur les micro-expressions et les mouvements subtils du visage, qui sont les véritables indicateurs des émotions internes d’un individu.</p>
+<!-- Assure-toi d'inclure FontAwesome dans ton head si ce n'est pas déjà fait -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="emotion-section">
+  <div class="emotion-card" data-aos="fade-right" data-aos-delay="200" >
+    <h3> Landmarks faciaux </h3>
+    <p>Les landmarks sont des points clés situés sur le visage — comme les coins des yeux, la pointe du nez, ou les courbes des lèvres — qui forment une carte détaillée et unique de votre expression.</p>
+    <p>Dans notre projet, ces repères servent de base solide pour analyser avec précision les micro-mouvements du visage, essentiels pour interpréter les émotions réelles des étudiants.</p>
+ <a href="https://onlinelibrary.wiley.com/doi/10.1155/2021/6623239" target="_blank" rel="noopener noreferrer">
+  <img src="{{ url_for('static', filename='image/landmarks.webp') }}" alt="Landmarks faciaux" class="card-image-bottom">
+</a>
+
+  </div>
+
+ <a href="https://melindaozel.com/facs-cheat-sheet/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+  <div class="emotion-card" data-aos="fade-left" data-aos-delay="200">
+    <h3> Action Units (AUs) </h3>
+    <p>Les Action Units correspondent aux mouvements musculaires spécifiques du visage, tels que le froncement des sourcils ou le sourire. Chaque AU est un signal distinct, reconnu internationalement par les chercheurs.</p>
+    <p>Notre système identifie et quantifie ces unités d’action pour traduire les expressions faciales en données objectives et mesurables. Ces unités sont au cœur de la détection émotionnelle.</p>
+    <img src="{{ url_for('static', filename='image/actionunits.webp') }}" alt="Landmarks faciaux" class="emotion-img">
+  </div>
+</a>
+
+<a href="https://imotions.com/blog/learning/research-fundamentals/facial-action-coding-system/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+  <div class="emotion-card" data-aos="fade-right" data-aos-delay="200">
+    <h3> Émotions</h3>
+    <p>À partir des AUs et des landmarks, notre technologie décode les émotions — joie, tristesse, surprise, colère, peur, dégoût, et plus encore — qui s’expriment à travers le visage.</p>
+    <p>Comprendre ces émotions permet d’évaluer la réceptivité et l’état psychologique des étudiants en temps réel.</p>
+    <img src="{{ url_for('static', filename='image/emotions.webp') }}" alt="Landmarks faciaux" class="card-image-bottom2">
+  </div>
+</a>
+
+<a href="https://www.claramariafiorentini.com/positive-emotions-in-the-classroom#:~:text=love%2C%20serenity%2C%20humour%2C%20kindness,creative%20in%20our%20problem%20solving" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+  <div class="emotion-card" data-aos="fade-left" data-aos-delay="200">
+    <h3>Engagement </h3>
+    <p>L’engagement reflète le degré d’attention, de motivation et d’implication des étudiants dans leur apprentissage. Grâce à la reconnaissance précise des émotions faciales, notre solution mesure cet engagement de façon non invasive et continue.</p>
+    <p>Cela aide les enseignants à adapter leurs méthodes pédagogiques pour maximiser la réussite et le bien-être des apprenants.</p>
+    <img src="{{ url_for('static', filename='image/engagement.jpg') }}" alt="Landmarks faciaux" class="emotion-img">
+  </div>
+</a>
+
+</div>
+
+    </div>
+</section>
+
+
+<section class="cta-section">
+  <div class="cta-container">
+    <div class="cta-text" >
+      <h2 data-aos="fade-up" data-aos-delay="200" >Un simple regard suffit pour comprendre l'engagement</h2>
+    </div>
+    <div class="cta-button"  data-aos="fade-up" data-aos-delay="200" >
+      <a href="{{ url_for('detecte') }}" type="button" class="cta-button" >Tentez l’expérience maintenant !</a>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="Contact" >
+   
+    <div class="Contact-box2 hel" >
+        <ul class="Contact-menus"  data-aos="fade-right" data-aos-delay="200"  >
+            <li class="Contact-menu"><a href="" class="Contact-lname">FAQ</a></li>
+            <li class="Contact-menu"><a href="" class="Contact-lname">Our History</a></li>
+            <li class="Contact-menu"><a href="" class="Contact-lname">Blog</a></li>
+            <li class="Contact-menu"><a href="" class="Contact-lname">Team Member</a></li>
+        </ul>
+    </div>
+    <div class="Contact-box3 hel"  data-aos="fade-up" data-aos-delay="200"  >
+        <img src="{{ url_for('static', filename='image/logo.png') }}" class="Contact-boxl">
+    </div>
+    <div class="Contact-box4 hel">
+        <ul class="Contact-menus"  data-aos="fade-left" data-aos-delay="200"  >
+            <li class="Contact-menu"><a href="" class="Contact-lname">Style Guide</a></li>
+            <li class="Contact-menu"><a href="" class="Contact-lname">Licenses</a></li>
+            <li class="Contact-menu"><a href="" class="Contact-lname">Error 404</a></li>
+            <li class="Contact-menu"><a href="" class="Contact-lname">Protected</a></li>
+        </ul>
+    </div>
+ 
+</section>
+
+<section id="drown">
+    <div class="droneown-one dr">
+        <a href="mailto:helloak@gmail.com" class="mail">Engage-Moi@gmail.com</a>
+        <a href="tel:9785253423" class="phonet">+212 568 478</a>
+    </div>
+    <div class="drown-Two dr">
+        <p>Casablanca  ,  Morocco</p>
+    </div>
+    <div class="drown-Three dr">
+        <a href="https://developers.facebook.com/docs/facebook-login/" target="_blank" class="drown-Three-icons"><i class="fa-brands fa-facebook-f" style="color: #ffffff;"></i></a>
+        <a href="#" class="drown-Three-icons"><i class="fa-brands fa-x-twitter" style="color: #ffffff;"></i></a>
+        <a href="#" class="drown-Three-icons"><i class="fa-brands fa-linkedin-in" style="color: #ffffff;"></i></a>
+        <a href="https://www.instagram.com/accounts/login/?next=%2Flivein.now%2Ftagged%2F&source=profile_tagged_tab" target="_blank" class="drown-Three-icons"><i class="fa-brands fa-instagram" style="color: #fefefe;"></i></a>
+    </div>
+</section>
+
+<section class="end">
+    <div class="endpara">
+        <p>Copyright © 2025 Engage-Moi, All Rights Reserved.</p>
+    </div>
+</section>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Engage-Moi - Emotion Detection</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="icon" href="{{ url_for('static', filename='image/logo.jpeg') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: black;
+            color: black;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 10px auto;
+            padding: 0px 20px;
+            background: black;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+            min-height: 1000px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 46px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: black;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        h3 {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 24px;
+        }
+
+        .upload-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 80px;
+            flex-wrap: wrap;
+        }
+
+        .upload-form input[type="file"] {
+            padding: 10px;
+            border: 2px solid #85c1e9;
+            border-radius: 10px;
+            background-color: #263238;
+            color: #E0E0E0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .upload-form input[type="file"]:hover {
+            background-color: #004c8c;
+            border-color: #00b0ff;
+            color: #fff;
+        }
+
+        .btn {
+            background-color:#85c1e9;
+            color: black;
+            font-weight: 600;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: white;
+            color: #85c1e9;
+        }
+
+        .result-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin:auto;
+            width: 90%;
+        }
+
+        .result-left {
+            flex: 1 1 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-box {
+            border-radius: 15px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .image-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 87%;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #85c1e9;
+        }
+
+        .result-right {
+            flex: 1 1 55%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .au-container,
+        .emotion-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            flex: 1 1 250px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            color: black;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 10px 12px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .results-table th {
+            background-color: white;
+            color: black;
+            font-weight: 700;
+        }
+
+        .results-table tr:nth-child(even) {
+            background-color: #85c1e9;
+        }
+
+        .emotion-result {
+            color: #0091EA;
+            font-weight: 600;
+        }
+
+        .engagement-oui {
+            color: green;
+            font-weight: 600;
+        }
+
+        .engagement-non {
+            color: red;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            .result-layout {
+                flex-direction: column;
+            }
+            .result-right {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="container">
+        <h1>Détection des Action Units</h1>
+
+        <form class="upload-form" action="/teste" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button class="btn" type="submit">Analyser l'image</button>
+        </form>
+
+        {% if filename %}
+        <div class="result-layout">
+            <div class="result-left">
+                <div class="result-box">
+                    <h2 style="font-size: 30px; font-weight: bold; margin: 0 0 10px 0;">Résultat</h2>
+                    <h3>Émotion détectée : <span class="emotion-result">{{ emotion }}</span></h3>
+                    {% if engagement.lower() == 'engagé' %}
+                        <h3>Engagement : <span class="engagement-oui">{{ engagement }}</span></h3>
+                    {% else %}
+                        <h3>Engagement : <span class="engagement-non">{{ engagement }}</span></h3>
+                    {% endif %}
+                </div>
+
+                <div class="image-container">
+                    <h2>Image analysée</h2>
+                    <img src="{{ url_for('static', filename=filename) }}" alt="Uploaded Image">
+                </div>
+            </div>
+
+            {% if predictions %}
+            <div class="result-right">
+                <div class="au-container">
+                    <h2>Action Units</h2>
+                    <table class="results-table">
+                        <tr>
+                            <th>Action Unit</th>
+                            <th>Intensité</th>
+                        </tr>
+                        {% for au, value in predictions %}
+                        <tr>
+                            <td>{{ au }}</td>
+                            <td>{{ "%.3f"|format(value) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <div class="emotion-container">
+                    <h2>Scores des émotions</h2>
+                    <table class="results-table">
+                        <tr>
+                            <th>Émotion</th>
+                            <th>Score</th>
+                        </tr>
+                        {% for emo, score in emotion_scores.items()|sort(attribute=1, reverse=True) %}
+                        <tr>
+                            <td>{{ emo.capitalize() }}</td>
+                            <td>{{ "%.3f"|format(score) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>
