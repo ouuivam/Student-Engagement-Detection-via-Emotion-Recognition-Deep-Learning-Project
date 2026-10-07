@@ -86,48 +86,106 @@ def determine_emotion_by_score(confidences_dict):
     return best_emotion, engagement, emotion_scores
 
 def extract_face(image_path):
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+    )
+
     image_cv = cv2.imread(image_path)
+
+    if image_cv is None:
+        return image_path, None
+
     gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+    faces = face_cascade.detectMultiScale(
+        gray,
+        scaleFactor=1.3,
+        minNeighbors=5
+    )
 
     if len(faces) == 0:
-        return image_path  # Aucun visage détecté, retourne l'image entière
+        return image_path, None
 
+    # Prendre le premier visage détecté
     x, y, w, h = faces[0]
+
+    # ==============================
+    # 1. Extraire le visage pour le modèle
+    # ==============================
     face = image_cv[y:y+h, x:x+w]
 
-    # Préparer le chemin pour enregistrer le visage recadré dans le dossier uploads
-    base, ext = os.path.splitext(image_path)
-    face_path = f"{base}_face{ext}"
+    base, _ = os.path.splitext(image_path)
+
+    face_path = f"{base}_face.jpg"
     cv2.imwrite(face_path, face)
 
-    return face_path
+    # ==============================
+    # 2. Encadrer le visage en rouge
+    # ==============================
+    annotated_image = image_cv.copy()
+
+    cv2.rectangle(
+        annotated_image,
+        (x, y),
+        (x + w, y + h),
+        (0, 0, 255),   # Rouge en BGR
+        3              # Épaisseur du cadre
+    )
+
+    # Sauvegarder la photo complète avec le cadre
+    annotated_path = f"{base}_annotated.jpg"
+
+    cv2.imwrite(annotated_path, annotated_image)
+
+    return face_path, annotated_path
 
 def predict_aus_and_emotion(image_path):
-    face_path = extract_face(image_path)
+    face_path, annotated_path = extract_face(image_path)
 
-    # Vérifie si c'est le même chemin = aucun visage détecté
-    if face_path == image_path:
+    # Aucun visage détecté
+    if face_path == image_path or face_path is None:
         confidences_dict = {au: 0.0 for au in au_labels}
+
         emotion = "inconnu"
         engagement = "inconnu"
         emotion_scores = {}
-        return list(confidences_dict.items()), emotion, engagement, emotion_scores, image_path
 
-    # Si visage détecté
+        return (
+            list(confidences_dict.items()),
+            emotion,
+            engagement,
+            emotion_scores,
+            image_path
+        )
+
+    # ==============================
+    # Analyse du visage par le modèle
+    # ==============================
     image = Image.open(face_path).convert('RGB')
+
     input_tensor = transform(image).unsqueeze(0)
 
     with torch.no_grad():
         outputs = model(input_tensor).squeeze(0).numpy()
 
-    confidences_dict = {au: float(score) for au, score in zip(au_labels, outputs)}
-    emotion, engagement, emotion_scores = determine_emotion_by_score(confidences_dict)
+    confidences_dict = {
+        au: float(score)
+        for au, score in zip(au_labels, outputs)
+    }
 
-    return list(confidences_dict.items()), emotion, engagement, emotion_scores, face_path
+    emotion, engagement, emotion_scores = determine_emotion_by_score(
+        confidences_dict
+    )
 
-
+    # IMPORTANT :
+    # On retourne la photo complète avec le cadre rouge
+    return (
+        list(confidences_dict.items()),
+        emotion,
+        engagement,
+        emotion_scores,
+        annotated_path
+    )
 
 import cv2
 import numpy as np
